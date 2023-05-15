@@ -1,0 +1,1 @@
+{"version":3,"file":"get-truck-view-model.js","sourceRoot":"","sources":["../../../../../src/infra/http/view-models/truck-view-model/get-truck-view-model.ts"],"names":[],"mappings":";;;AAEA,MAAa,oBAAoB;IAC/B,MAAM,CAAC,MAAM,CAAC,KAAc;QAC1B,OAAO;YACL,IAAI,EAAE,EAAE,KAAK,EAAE;SAChB,CAAC;IACJ,CAAC;CACF;AAND,oDAMC"}

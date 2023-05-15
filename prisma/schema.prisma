@@ -1,0 +1,75 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model RawTruck {
+  id                           String                   @id @unique
+  model                        String
+  plate                        String
+  axes                         Float
+  stipulatedAverageConsumption Float
+  valuePerKmReceived           Float
+  updatedAt                    DateTime                 @default(now())
+  createdAt                    DateTime                 @default(now())
+  driver                       RawDriver[]
+  consumptionExpenses          RawConsumptionExpenses[]
+  revenueAndProfit             RawRevenueAndProfit[]
+  maintenance                  RawMaintenance[]
+}
+
+model RawDriver {
+  id               String                @id @unique
+  name             String
+  salary           Float
+  updatedAt        DateTime              @default(now())
+  createdAt        DateTime              @default(now())
+  truck            RawTruck              @relation(fields: [truckId], references: [id])
+  truckId          String
+  revenueAndProfit RawRevenueAndProfit[]
+  maintenance      RawMaintenance[]
+}
+
+model RawConsumptionExpenses {
+  id                 String   @id @unique
+  spentLiters        Float
+  kmDriven           Float
+  averageConsumption Float
+  updatedAt          DateTime @default(now())
+  createdAt          DateTime @default(now())
+  Truck              RawTruck @relation(fields: [truckId], references: [id])
+  truckId            String
+}
+
+model RawRevenueAndProfit {
+  id             String    @id @unique
+  revenue        Float
+  spent          Float
+  expendableCost Float
+  profit         Float
+  wastedProfit   Float
+  updatedAt      DateTime  @default(now())
+  createdAt      DateTime  @default(now())
+  Truck          RawTruck  @relation(fields: [truckId], references: [id])
+  truckId        String
+  Driver         RawDriver @relation(fields: [driverId], references: [id])
+  driverId       String
+}
+
+model RawMaintenance {
+  id          String    @id @unique
+  amountSpent Float
+  updatedAt   DateTime  @default(now())
+  createdAt   DateTime  @default(now())
+  Truck       RawTruck  @relation(fields: [truckId], references: [id])
+  truckId     String
+  Driver      RawDriver @relation(fields: [driverId], references: [id])
+  driverId    String
+}
